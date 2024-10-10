@@ -50,7 +50,7 @@ export class SimpleUser {
           this.session = session;
           this.delegate?.onCallCreated?.();
         },
-        onCallReceived: () => this.delegate?.onCallReceived?.(),
+        onCallReceived: (session: Session) => this.delegate?.onCallReceived?.(session),
         onCallHangup: () => {
           this.session = undefined;
           this.delegate?.onCallHangup && this.delegate?.onCallHangup();
