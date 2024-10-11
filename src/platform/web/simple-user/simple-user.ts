@@ -10,6 +10,7 @@ import { SessionManager } from "../session-manager/session-manager.js";
 import { SessionManagerOptions } from "../session-manager/session-manager-options.js";
 import { SimpleUserDelegate } from "./simple-user-delegate.js";
 import { SimpleUserOptions } from "./simple-user-options.js";
+import { Invitation } from "../../../api/invitation.js";
 
 /**
  * A simple SIP user class.
@@ -48,7 +49,7 @@ export class SimpleUser {
         onCallAnswered: () => this.delegate?.onCallAnswered?.(),
         onCallCreated: (session: Session) => {
           this.session = session;
-          this.delegate?.onCallCreated?.();
+          this.delegate?.onCallCreated?.(session);
         },
         onCallReceived: (session: Session) => this.delegate?.onCallReceived?.(session),
         onCallHangup: () => {

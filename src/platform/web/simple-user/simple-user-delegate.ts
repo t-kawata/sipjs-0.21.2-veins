@@ -1,3 +1,4 @@
+import { Invitation } from "../../../api/invitation.js";
 import { Session } from "../../../api/session.js";
 
 /**
@@ -17,7 +18,7 @@ export interface SimpleUserDelegate {
    * @remarks
    * Callback for handling the creation of a new Session.
    */
-  onCallCreated?(): void;
+  onCallCreated?(session: Session): void;
 
   /**
    * Called when a call is received.
