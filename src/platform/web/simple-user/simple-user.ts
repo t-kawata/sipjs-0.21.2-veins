@@ -11,6 +11,7 @@ import { SessionManagerOptions } from "../session-manager/session-manager-option
 import { SimpleUserDelegate } from "./simple-user-delegate.js";
 import { SimpleUserOptions } from "./simple-user-options.js";
 import { Invitation } from "../../../api/invitation.js";
+import { Inviter } from "../../../api/inviter.js";
 
 /**
  * A simple SIP user class.
@@ -46,15 +47,15 @@ export class SimpleUser {
     const sessionManagerOptions: SessionManagerOptions = {
       aor: this.options.aor,
       delegate: {
-        onCallAnswered: () => this.delegate?.onCallAnswered?.(),
+        onCallAnswered: (session: Session) => this.delegate?.onCallAnswered?.(session),
         onCallCreated: (session: Session) => {
           this.session = session;
           this.delegate?.onCallCreated?.(session);
         },
         onCallReceived: (session: Session) => this.delegate?.onCallReceived?.(session),
-        onCallHangup: () => {
+        onCallHangup: (session: Session) => {
           this.session = undefined;
-          this.delegate?.onCallHangup && this.delegate?.onCallHangup();
+          this.delegate?.onCallHangup && this.delegate?.onCallHangup(session);
         },
         onCallHold: (s: Session, held: boolean) => this.delegate?.onCallHold?.(held),
         onCallDTMFReceived: (s: Session, tone: string, dur: number) => this.delegate?.onCallDTMFReceived?.(tone, dur),
@@ -192,14 +193,15 @@ export class SimpleUser {
     destination: string,
     inviterOptions?: InviterOptions,
     inviterInviteOptions?: InviterInviteOptions
-  ): Promise<void> {
+  ): Promise<Inviter> {
     this.logger.log(`[${this.id}] Beginning Session...`);
     if (this.session) {
       return Promise.reject(new Error("Session already exists."));
     }
-    return this.sessionManager.call(destination, inviterOptions, inviterInviteOptions).then(() => {
-      return;
-    });
+    return this.sessionManager.call(destination, inviterOptions, inviterInviteOptions)
+    // .then(() => {
+    //   return;
+    // });
   }
 
   /**

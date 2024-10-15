@@ -11,7 +11,7 @@ export interface SimpleUserDelegate {
    * @remarks
    * Callback for handling establishment of a new Session.
    */
-  onCallAnswered?(): void;
+  onCallAnswered?(session: Session): void;
 
   /**
    * Called when a call is created.
@@ -33,7 +33,7 @@ export interface SimpleUserDelegate {
    * @remarks
    * Callback for handling termination of a Session.
    */
-  onCallHangup?(): void;
+  onCallHangup?(session: Session): void;
 
   /**
    * Called when a call is put on hold or taken off hold.
