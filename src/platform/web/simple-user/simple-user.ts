@@ -57,7 +57,7 @@ export class SimpleUser {
           this.session = undefined;
           this.delegate?.onCallHangup && this.delegate?.onCallHangup(session);
         },
-        onCallHold: (s: Session, held: boolean) => this.delegate?.onCallHold?.(held),
+        onCallHold: (s: Session, held: boolean) => this.delegate?.onCallHold?.(s, held),
         onCallDTMFReceived: (s: Session, tone: string, dur: number) => this.delegate?.onCallDTMFReceived?.(tone, dur),
         onMessageReceived: (message: Message) => this.delegate?.onMessageReceived?.(message.request.body),
         onRegistered: () => this.delegate?.onRegistered?.(),

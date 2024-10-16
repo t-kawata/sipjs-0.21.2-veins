@@ -791,7 +791,8 @@ export class SessionManager {
       // time.
       // https://tools.ietf.org/html/draft-kaplan-dispatch-info-dtmf-package-00#section-5.3
       const dtmf = tone;
-      const duration = 2000;
+      // const duration = 2000;
+      const duration = 500;
       const body = {
         contentDisposition: "render",
         contentType: "application/dtmf-relay",
@@ -1474,7 +1475,7 @@ export class SessionManager {
       this.logger.warn(`[${session.id}] An established session is required to enable/disable media tracks`);
       return;
     }
-
+    
     const managedSession = this.sessionManaged(session);
     if (managedSession !== undefined) {
       managedSession.muted = mute;
